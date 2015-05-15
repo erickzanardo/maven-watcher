@@ -1,7 +1,7 @@
-var findit = require('findit')
-  , cheerio = require('cheerio')
+var cheerio = require('cheerio')
   , fs = require('fs')
-  , path = require('path');
+  , path = require('path')
+  , FolderTransporter = require('./folder-transporter.js');
 
 function Watcher(path) {
   this.path = path;
@@ -20,18 +20,15 @@ Watcher.prototype.parseTargetFolder = function(done) {
 };
 
 Watcher.prototype.readRootFolder = function() {
-  var finder = findit(this.path);
+  var resourcesPath = path.join(this.path.toString(), 'src', 'main', 'resources');
+  var resourcesPathDest = path.join(this.targetPath.toString(), 'WEB-INF', 'classes');
 
-  // TODO find src/main/resources
-  // TODO find src/main/webapp
-  
-  finder.on('directory', function(dir, stat, stop) {
-    console.log(dir);
-  });
+  new FolderTransporter(resourcesPath, resourcesPathDest).beginTransport();
 
-  finder.on('file', function(file, stat) {
-    console.log(file);
-  });
+  var webappPath = path.join(this.path, 'src', 'main', 'webapp');
+  var webappPathDest = this.targetPath;
+
+  new FolderTransporter(webappPath, webappPathDest).beginTransport();
 };
 
 Watcher.prototype.watch = function() {
