@@ -37,7 +37,7 @@ FolderTransporter.prototype.beginTransport = function() {
           // if exists create on dest
           fs.stat(fullpath, function(err, stats) {
             if(stats.isFile()) {
-              fs.readFile(fullpath, 'utf8', function(err, data) {
+              fs.readFile(fullpath, function(err, data) {
                 if(err) throw err;
                 fs.writeFile(destpath, data);
                 console.log('file: ' + fullpath + ' created ');
@@ -61,7 +61,7 @@ FolderTransporter.prototype.beginTransport = function() {
       fs.stat(fullpath, function(err, stats) {
         if(!err) {
           if(stats.isFile()) {
-            fs.readFile(fullpath, 'utf8', function(err, data) {
+            fs.readFile(fullpath, function(err, data) {
               if(err) throw err;
                 fs.writeFile(destpath, data);
                 console.log('file: ' + fullpath + ' updated ');
