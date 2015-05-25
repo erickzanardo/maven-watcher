@@ -9,6 +9,9 @@ var skip = [
 
 var ignoreEndings = [
   'swp',
+  'swo',
+  'swx',
+  'swpx',
   '~'
 ];
 
