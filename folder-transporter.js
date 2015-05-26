@@ -1,7 +1,8 @@
 var fs = require('fs')
   , ReadFolder = require('./rfolder.js')
   , path = require('path')
-  , Strings = require('./strings.js');
+  , Strings = require('./strings.js')
+  ncp = require('ncp').ncp;
 
 var skip = [
   'WEB-INF'
@@ -46,7 +47,10 @@ FolderTransporter.prototype.beginTransport = function() {
                 console.log('file: ' + fullpath + ' created ');
               });
             } else {
-              console.log('no support for folders yet');
+              ncp(fullpath, destpath, function (err) {
+                if(err) throw err;
+                new FolderTransporter(fullpath, destpath).beginTransport(); 
+              });
             }
           }.bind(this));
         } else {
@@ -66,11 +70,9 @@ FolderTransporter.prototype.beginTransport = function() {
           if(stats.isFile()) {
             fs.readFile(fullpath, function(err, data) {
               if(err) throw err;
-                fs.writeFile(destpath, data);
-                console.log('file: ' + fullpath + ' updated ');
-              });
-          } else {
-            console.log('no support for folders yet');
+              fs.writeFile(destpath, data);
+              console.log('file: ' + fullpath + ' updated ');
+            });
           }
         }
       });

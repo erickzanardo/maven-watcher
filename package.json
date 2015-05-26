@@ -1,6 +1,6 @@
 {
   "name": "maven-watcher",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Cli tool to update the deployed resources of a java/maven web project when there is changes on the files",
   "main": "index.js",
   "repository": {
@@ -21,6 +21,7 @@
   },
   "homepage": "https://github.com/erickzanardo/maven-watcher#readme",
   "dependencies": {
-    "cheerio": "^0.19.0"
+    "cheerio": "^0.19.0",
+    "ncp": "^2.0.0"
   }
 }
